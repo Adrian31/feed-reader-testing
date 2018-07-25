@@ -20,6 +20,7 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
+        // Make sure all feeds are defined and not empty
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
@@ -31,6 +32,7 @@ $(function() {
          * and that the URL is not empty.
          */
         it('all urls are defined and not empty', function() {
+            // loop through feeds json to make sure they contain URLs and that they are defined.
             for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].url).toBeDefined();
                 expect(allFeeds[i].url.length).not.toBe(0);
@@ -42,6 +44,7 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+        // Make sure all feeds have a name and aren't empty
         it('all names are not empty', function() {
             for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].name).toBeDefined();
@@ -59,6 +62,7 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+        // Check for inital hidden menu
         it('menu element is hidden by default', function() {
             expect($('body').hasClass('menu-hidden')).toEqual(true);
         });
@@ -67,6 +71,7 @@ $(function() {
          * should have two expectations: does the menu display when
          * clicked and does it hide when clicked again.
          */
+        // Make sure menu icon click toggle is working
         it('menu changes visibility if menu icon is clicked', function() {
             // expect($('body').hasClass('menu-hidden')).toEqual(true);
 
@@ -86,11 +91,13 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        // Make it asynchronous!
         beforeEach(function(done) {
             loadFeed(0, function() {
                 done();
             });
         });
+        // Make sure there is at least one feed entry
         it('load function call returns at least one entry ', function() {
             expect($('.feed .entry').length).toBeGreaterThan(0);
         });
@@ -101,17 +108,20 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
         var firstFeed;
+        // Test first feed loaded
         beforeEach(function(done) {
             loadFeed(0, function() {
                 firstFeed = $('.feed').html();
 
+                // Test second feed loaded
                 loadFeed(1, function() {
                     done();
                 });
             });
         });
-
+        // Make sure two feeds are not the same
         it("change actually occus in news feed", function(done) {
             var secondFeed = $('.feed').html();
             expect(firstFeed).not.toBe(secondFeed);
